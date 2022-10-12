@@ -41,8 +41,27 @@ void CollectorGuiExternalBridge::publishToggleHelpPage() const {
 
 void CollectorGuiExternalBridge::publishRobotAct(
     [[maybe_unused]]MoveType moveType) const {
-  LOGR("Oh no ... nothing happened ... and the buttons remained locked. "
-       "Maybe something will unlock them externally?");
+      auto k = MoveAction();
+      
+      
+      switch (moveType)
+      {
+      case MoveType::FORWARD:
+        k.move_type = k.FORWARD;
+        break;
+      case MoveType::ROTATE_LEFT:
+        k.move_type = k.ROTATE_LEFT;
+        break;
+      case MoveType::ROTATE_RIGHT:
+        k.move_type = k.ROTATE_RIGHT;
+        break;
+      default:
+        std::cout<<"Unknown"<<std::endl;  
+        break;
+      }
+      _moveActionPublisher->publish(k);
+/*   LOGR("Oh no ... nothing happened ... and the buttons remained locked. "
+       "Maybe something will unlock them externally?"); */
 }
 
 void CollectorGuiExternalBridge::publishUserAuthenticate(const UserData &data) {
@@ -59,7 +78,7 @@ ErrorCode CollectorGuiExternalBridge::initOutInterface(
   if (nullptr == _outInterface.invokeActionEventCb) {
     LOGERR("Error, nullptr provided for InvokeActionEventCb");
     return ErrorCode::FAILURE;
-  }
+  }std::shared_ptr<MySub>  node
 
   if (nullptr == _outInterface.enablePlayerInputCb) {
     LOGERR("Error, nullptr provided for EnablePlayerInputCb");
@@ -79,8 +98,10 @@ ErrorCode CollectorGuiExternalBridge::initCommunication() {
   constexpr auto queueSize = 10;
   _userAuthenticatePublisher = create_publisher<UserAuthenticate>(
       USER_AUTHENTICATE_TOPIC, queueSize);
-
   rclcpp::QoS qos(queueSize);
+  _moveActionPublisher = create_publisher<MoveAction>(
+    ROBOT_MOVE_TYPE_TOPIC,qos
+  );
   qos.transient_local(); //enable message latching for late joining subscribers
 
   rclcpp::SubscriptionOptions subsriptionOptions;

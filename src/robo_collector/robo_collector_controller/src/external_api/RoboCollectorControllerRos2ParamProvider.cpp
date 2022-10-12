@@ -41,9 +41,9 @@ constexpr auto DEFAULT_EXECUTOR_THREADS_NUM = 2;
 constexpr auto DEFAULT_USE_LOCAL_CONTROLLER_MODE = true;
 
 //user data
-constexpr auto DEFAULT_USER = "not_set";
-constexpr auto DEFAULT_REPOSITORY = "not_set";
-constexpr auto DEFAULT_COMMIT_SHA = "not_set";
+constexpr auto DEFAULT_USER = "dimbo";
+constexpr auto DEFAULT_REPOSITORY = "123123";
+constexpr auto DEFAULT_COMMIT_SHA = "321321";
 
 template<typename T>
 void handleParamError(const char* paramName, T& value, const T& defaultValue) {
@@ -136,7 +136,7 @@ RoboCollectorControllerRos2Params RoboCollectorControllerRos2ParamProvider::getP
   get_parameter(USER_PARAM_NAME, _params.userData.user);
   get_parameter(REPOSITORY_PARAM_NAME, _params.userData.repository);
   get_parameter(COMMIT_SHA_PARAM_NAME, _params.userData.commitSha);
-
+  std::cout<<"info"<<std::endl;
   _params.validate();
 
   return _params;
