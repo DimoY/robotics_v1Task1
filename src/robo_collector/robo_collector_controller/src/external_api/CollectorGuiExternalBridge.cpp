@@ -78,7 +78,7 @@ ErrorCode CollectorGuiExternalBridge::initOutInterface(
   if (nullptr == _outInterface.invokeActionEventCb) {
     LOGERR("Error, nullptr provided for InvokeActionEventCb");
     return ErrorCode::FAILURE;
-  }std::shared_ptr<MySub>  node
+  }
 
   if (nullptr == _outInterface.enablePlayerInputCb) {
     LOGERR("Error, nullptr provided for EnablePlayerInputCb");
